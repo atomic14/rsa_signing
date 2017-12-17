@@ -2,28 +2,19 @@
 const crypto = require('crypto');
 const fs = require('fs');
 
-var RSA_KEY_START = '-----BEGIN RSA PRIVATE KEY-----'
-var RSA_KEY_END = '-----END RSA PRIVATE KEY-----'
-
 // sign a message with the private key
 const message = "This is a message from the emergency broadcasting system"
 
-// read the hex string into a buffer
-const privateKey = new Buffer(fs.readFileSync('private_key.hex').toString(), 'hex');
-// convert to PEM format
-const privateKeyPEM = RSA_KEY_START + '\n' + privateKey.toString('base64') + '\n' + RSA_KEY_END;
+// read the private key
+const privateKey = fs.readFileSync('private_key.pem').toString();
 
+// sign the message
 const sign = crypto.createSign('SHA256');
 sign.write(message);
 sign.end();
-
-console.log(privateKeyPEM);
-
-const signature = sign.sign(privateKeyPEM, 'hex');
-
-console.log('set signature');
-
+const signature = sign.sign(privateKey, 'hex');
 const signatureHex = signature.toString('hex');
+// save it to file
+fs.writeFileSync('signature.hex', signatureHex);
 
-fs.writeFileSync('singature.hex', signatureHex);
 console.log('Wrote signature to signature.hex');

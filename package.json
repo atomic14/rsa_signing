@@ -1,0 +1,12 @@
+{
+  "name": "rsa_signing",
+  "version": "1.0.0",
+  "description": "Sample code for RSA in node",
+  "main": "index.js",
+  "repository": "https://github.com/atomic14/rsa_signing",
+  "author": "Chris Greening <chris@cmgresearch.com>",
+  "license": "MIT",
+  "dependencies": {
+    "node-forge": "^0.7.1"
+  }
+}
